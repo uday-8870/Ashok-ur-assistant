@@ -1,47 +1,44 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat with   
- Assistant</title>
+  <title>Chat with Ashok</title>
   <style>
     body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #121212;
-        color: #fff;
-        font-family: sans-serif;
-      }
-  
-      .chat-container {
-        display: grid;
-        grid-template-rows: 60px auto 60px;
-        width: 80%;
-        max-width: 600px;
-        border-radius: 10px;
-        background-color: #222;
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
-      }
-
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #121212;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    .chat-container {
+      display: grid;
+      grid-template-rows: 60px auto 60px;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 10px;
+      background-color: #222;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    }
     .chat-header {
       display: flex;
       align-items: center;
       justify-content: center;
       background-color: #333;
       border-top-left-radius: 10px;
-      border-top-right-radius: 10px;   
-
+      border-top-right-radius: 10px;
     }
-
     .chat-box {
       padding: 20px;
       overflow-y: scroll;
       background-color: #181818;
+      display: flex;
+      flex-direction: column;
     }
-
     .chat-input {
       display: flex;
       align-items: center;
@@ -50,7 +47,6 @@
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
     }
-
     .chat-input input {
       flex-grow: 1;
       padding: 10px;
@@ -58,209 +54,187 @@
       background-color: #333;
       color: #fff;
       border-radius: 5px;
+      transition: all 0.3s ease-in-out;
     }
-
+    .chat-input input::placeholder {
+      color: #888;
+      animation: placeholder-anim 2s infinite;
+    }
+    .chat-input input:focus {
+      outline: none;
+      box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+    }
     .chat-input button {
       padding: 10px 20px;
       background-color: #007bff;
       color: #fff;
       border: none;
       border-radius: 5px;
-      cursor: pointer;   
-
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
     }
-
+    .chat-input button:hover {
+      background-color: #0066cc;
+    }
+    .chat-input button:active {
+      background-color: #005299;
+    }
     .user-message {
-      background-color: #444;
+      background: linear-gradient(to bottom right, #444, #333);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      border-radius: 5px;
+      align-self: flex-start;
+      margin-bottom: 10px;
+    }
+    .assistant-message {
+      background: linear-gradient(to bottom left, #333, #222);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
       padding: 10px;
       border-radius: 5px;
       align-self: flex-end;
+      margin-bottom: 10px;
     }
-
-    /* ... previous styles */
-
-.user-message {
-  background: linear-gradient(to bottom right, #444, #333);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  /* ... */
-}
-
-.assistant-message {
-  background: linear-gradient(to bottom left, #333, #222);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  /* ... */
-}
-.chat-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.user-message {
-  align-self: flex-start;
-  background-color: #444;
-  /* ... */
-}
-
-.assistant-message {
-  align-self: flex-end;
-  background-color: #333;
-  /* ... */
-}
-
-.chat-input input {
-  /* ... */
-  transition: all 0.3s ease-in-out;
-  &::placeholder {
-    color: #888;
-    animation: placeholder-anim 2s infinite;
-  }
-  &:focus {
-    outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
-  }
-}
-
-.chat-input button {
-  /* ... */
-  transition: all 0.3s ease-in-out;
-  &:hover {
-    background-color: #0066cc;
-  }
-  &:active {
-    background-color: #005299;
-  }
-}
-
-@keyframes placeholder-anim {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
+    @keyframes placeholder-anim {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
     @media (max-width: 768px) {
-        .chat-container {
-          width: 90%;
-        }
+      .chat-container {
+        width: 90%;
       }
-  
-      @media (max-width: 576px) {
-        .chat-container {
-          width: 95%;
-        }
+    }
+    @media (max-width: 576px) {
+      .chat-container {
+        width: 95%;
       }
+    }
+    .restart-button {
+      display: none;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    .restart-button:hover {
+      background-color: #218838;
+    }
+    .restart-button:active {
+      background-color: #1e7e34;
+    }
   </style>
 </head>
 <body>
   <div class="chat-container">
-    <div class="chat-header">Chat with Assistant</div>
-    <div class="chat-box" id="chat-box">
-      </div>
+    <div class="chat-header">Chat with ASHOK</div>
+    <div class="chat-box" id="chat-box"></div>
     <div class="chat-input">
       <input type="text" id="user-input" placeholder="Type your message...">
       <button onclick="sendMessage()">Send</button>
+      <button id="restart-button" class="restart-button" onclick="restartChat()">Restart</button>
+      <button onclick="startRecording()">Start Recording</button>
     </div>
   </div>
   <script>
-        let exitFlag = false;
-        let recognition;
-        let recognizing = false;
+    let exitFlag = false;
+    let recognition;
+    let recognizing = false;
 
-        if (!('webkitSpeechRecognition' in window)) {
-            alert('Upgrade your browser! This feature is not supported in your current browser.');
-        } else {
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = 'en-US';
+    if (!('webkitSpeechRecognition' in window)) {
+      alert('Upgrade your browser! This feature is not supported in your current browser.');
+    } else {
+      recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
 
-            recognition.onstart = function() {
-                recognizing = true;
-                console.log('Voice recognition started. Speak into the microphone.');
-            };
+      recognition.onstart = function() {
+        recognizing = true;
+        console.log('Voice recognition started. Speak into the microphone.');
+      };
 
-            recognition.onresult = function(event) {
-                recognizing = false;
-                const transcript = event.results[0][0].transcript;
-                document.getElementById('user-input').value = transcript;
-                sendMessage();
-            };
+      recognition.onresult = function(event) {
+        recognizing = false;
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('user-input').value = transcript;
+        sendMessage();
+      };
 
-            recognition.onerror = function(event) {
-                recognizing = false;
-                console.error('Voice recognition error', event.error);
-            };
+      recognition.onerror = function(event) {
+        recognizing = false;
+        console.error('Voice recognition error', event.error);
+      };
 
-            recognition.onend = function() {
-                recognizing = false;
-                console.log('Voice recognition ended.');
-            };
+      recognition.onend = function() {
+        recognizing = false;
+        console.log('Voice recognition ended.');
+      };
+    }
+
+    function startRecording() {
+      if (recognizing) {
+        recognition.stop();
+        return;
+      }
+      recognition.start();
+    }
+
+    function sendMessage() {
+      const userInput = document.getElementById("user-input").value;
+      if (!userInput) return;
+
+      const chatBox = document.getElementById("chat-box");
+      const userMessage = document.createElement("p");
+      userMessage.textContent = userInput;
+      userMessage.classList.add("user-message");
+      chatBox.appendChild(userMessage);
+
+      fetch("/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query: userInput })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const assistantMessage = document.createElement("p");
+        assistantMessage.textContent = data.response;
+        assistantMessage.classList.add("assistant-message");
+        chatBox.appendChild(assistantMessage);
+
+        speakText(data.response);
+
+        if (data.response === "Goodbye!") {
+          document.getElementById("chat-input").style.display = "none";
+          document.getElementById("restart-button").style.display = "block";
+          exitFlag = true;
         }
 
-        function startRecording() {
-            if (recognizing) {
-                recognition.stop();
-                return;
-            }
-            recognition.start();
-        }
+        chatBox.scrollTop = chatBox.scrollHeight;
+        document.getElementById("user-input").value = "";
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
 
-        function sendMessage() {
-            const userInput = document.getElementById("user-input").value;
-            if (!userInput) return;
-            
+    function speakText(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      window.speechSynthesis.speak(utterance);
+    }
 
-            const chatBox = document.getElementById("chat-box");
-            const userMessage = document.createElement("p");
-            userMessage.textContent = userInput;
-            userMessage.classList.add("user-message");
-            chatBox.appendChild(userMessage);
-
-            fetch("/ask", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ query: userInput })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const assistantMessage = document.createElement("p");
-                assistantMessage.textContent = data.response;
-                assistantMessage.classList.add("assistant-message");
-                chatBox.appendChild(assistantMessage);
-
-                speakText(data.response);
-
-                if (data.response === "Goodbye!") {
-                    document.getElementById("chat-input").style.display = "none";
-                    document.getElementById("restart-button").style.display = "block";
-                    exitFlag = true;
-                }
-
-                chatBox.scrollTop = chatBox.scrollHeight;
-                document.getElementById("user-input").value = "";
-            });
-        }
-
-        function speakText(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            window.speechSynthesis.speak(utterance);
-        }
-
-        function restartChat() {
-            document.getElementById("chat-box").innerHTML = "<p>{{ greeting }}! How can I assist you today?</p>";
-            document.getElementById("chat-input").style.display = "flex";
-            document.getElementById("restart-button").style.display = "none";
-            exitFlag = false;
-        }
-
-    </script>
+    function restartChat() {
+      document.getElementById("chat-box").innerHTML = "<p>Good to see you again! How can I assist you today?</p>";
+      document.getElementById("chat-input").style.display = "flex";
+      document.getElementById("restart-button").style.display = "none";
+      exitFlag = false;
+    }
+  </script>
 </body>
 </html>
